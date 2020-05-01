@@ -87,6 +87,8 @@ var restart = function(){
 	winner.innerHTML = ""
 	var pDiv = document.getElementById("players")
 	pDiv.style.display = "block"
+	var gDiv = document.getElementById("gameScreen")
+	gDiv.style.display = "none"
 }
 
 var startGame = function(){
