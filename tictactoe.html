@@ -1,0 +1,59 @@
+<!--
+   tresENraya.html
+   
+   Copyright 2020 DAVID GOMEZ CALLES
+   
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation; either version 2 of the License, or
+   (at your option) any later version.
+   
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+   
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+   MA 02110-1301, USA.
+   
+   
+-->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<title>Tres en Raya</title>
+	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+	<meta name="generator" content="Geany 1.36" />
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+	<div id = "tablero">
+		<div class= "row">
+			<div class = "cell" id = "00" onclick = "putSign([0,0],tablero),checkEnd(turn,tablero),changeTurn()">-</div>
+			<div class = "cell" id = "01" onclick = "putSign([0,1],tablero),checkEnd(turn,tablero),changeTurn()">-</div>
+			<div class = "cell" id = "02" onclick = "putSign([0,2],tablero),checkEnd(turn,tablero),changeTurn()">-</div>
+		</div>
+		<div class= "row">
+			<div class = "cell" id = "10" onclick = "putSign([1,0],tablero),checkEnd(turn,tablero),changeTurn()">-</div>
+			<div class = "cell" id = "11" onclick = "putSign([1,1],tablero),checkEnd(turn,tablero),changeTurn()">-</div>
+			<div class = "cell" id = "12" onclick = "putSign([1,2],tablero),checkEnd(turn,tablero),changeTurn()">-</div>
+		</div>
+		<div class= "row">
+			<div class = "cell" id = "20" onclick = "putSign([2,0],tablero),checkEnd(turn,tablero),changeTurn()">-</div>
+			<div class = "cell" id = "21" onclick = "putSign([2,1],tablero),checkEnd(turn,tablero),changeTurn()">-</div>
+			<div class = "cell" id = "22" onclick = "putSign([2,2],tablero),checkEnd(turn,tablero),changeTurn()">-</div>
+		</div>
+	</div>
+	<p id = "turn">Turno de: </p>
+	<h1 id= "winner"></h1>
+	<button onclick = "restart()">Reiniciar</button>
+	<script src ="tictactoe.js"></script>
+</body>
+
+</html>
