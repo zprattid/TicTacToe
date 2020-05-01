@@ -1,7 +1,9 @@
 var tablero = [["-", "-", "-"],
 				["-","-","-"],
 				["-","-","-"]]
-var player = function(sign){
+
+var player = function(name,sign){
+	this.name = name
 	this.sign = sign
 	this.turn = undefined
 }
@@ -12,57 +14,104 @@ var displayTableroConsole = function(tab){
 	}
 }
 
-var putSign = function(coord, tab){
-	if (tab[coord[0]][coord[1]] == "-"){
-		tab[coord[0]][coord[1]] = turn
+var putSign = function(coord){
+	if (tablero[coord[0]][coord[1]] == "-"){
+		tablero[coord[0]][coord[1]] = turn.sign
 		id = coord[0].toString()+coord[1].toString()
 		//console.log(id)
 		var cell = document.getElementById(id)
-		cell.innerHTML = turn
+		cell.innerHTML = turn.sign
+		return true
+	} else {
+		return false
 	}
 }
 
 var changeTurn = function(){
 	var t = document.getElementById("turn")
-	if (turn == "X"){
-		turn = player2.sign
-	} else if (turn == "O") {
-		turn = player1.sign
+	if (turn.sign == "X"){
+		turn = player2
+	} else if (turn.sign == "O") {
+		turn = player1
 	}
-	t.innerHTML = "Turno de: "+turn
+	t.innerHTML = "Turno de: "+turn.name
+	alert("Turno de: "+turn.name)
 }
 
-var checkEnd = function(sign, tab){
-	var row1 = tab[0][0]+tab[0][1]+tab[0][2]
-	var row2 = tab[1][0]+tab[1][1]+tab[1][2]
-	var row3 = tab[2][0]+tab[2][1]+tab[2][2]
-	var col1 = tab[0][0]+tab[1][0]+tab[2][0]
-	var col2 = tab[0][1]+tab[1][1]+tab[2][1]
-	var col3 = tab[0][2]+tab[1][2]+tab[2][2]
-	var dia1 = tab[0][0]+tab[1][1]+tab[2][2]
-	var dia2 = tab[0][2]+tab[1][1]+tab[2][0]
+var checkEnd = function(){
+	var row1 = tablero[0][0]+tablero[0][1]+tablero[0][2]
+	var row2 = tablero[1][0]+tablero[1][1]+tablero[1][2]
+	var row3 = tablero[2][0]+tablero[2][1]+tablero[2][2]
+	var col1 = tablero[0][0]+tablero[1][0]+tablero[2][0]
+	var col2 = tablero[0][1]+tablero[1][1]+tablero[2][1]
+	var col3 = tablero[0][2]+tablero[1][2]+tablero[2][2]
+	var dia1 = tablero[0][0]+tablero[1][1]+tablero[2][2]
+	var dia2 = tablero[0][2]+tablero[1][1]+tablero[2][0]
 	var posibles = [row1, row2, row3, col1, col2, col3, dia1, dia2]
 	for(var i = 0; i<posibles.length; i++){
-		if (posibles[i] == sign+sign+sign){
+		if (posibles[i] == turn.sign+turn.sign+turn.sign){
 			//console.log(sign+" WINS")
 			winner = document.getElementById("winner")
-			winner.innerHTML = sign+" GANA"
+			winner.innerHTML = turn.name+" GANA"
 		}
 	}
 }
 
-player1 = new player("X")
-var turn = player1.sign
-var t = document.getElementById("turn")
-t.innerHTML = "Turno de: "+turn
-player2 = new player("O")
+var routineClick = function(coord){
+	if (putSign(coord) == true){
+		checkEnd()
+		changeTurn()
+	}
+}
 
-/*displayTableroConsole(tablero)
-console.log("######")
-putSign([0,0],tablero)
-putSign(player2, player1,[1,1],tablero)
-putSign(player1, player2,[0,1],tablero)
-putSign(player2, player1,[2,1],tablero)
-putSign(player1, player2,[0,2],tablero)
-displayTableroConsole(tablero)
-checkEnd("x",tablero)*/
+var restart = function(){
+	var tab = document.getElementById("tablero")
+	var rows = tab.children
+	//Restart de la interfaz
+	for (var i = 0; i<rows.length; i++){
+		//console.log(rows[i])
+		for (var x = 0; x<rows[i].children.length; x++){
+			//console.log(rows[i].children[x])
+			rows[i].children[x].innerHTML = "-"
+		}
+	}
+	//Restart del objeto tablero
+	for (var i = 0; i<tablero.length; i++){
+		//console.log(rows[i])
+		for (var x = 0; x<tablero[i].length; x++){
+			//console.log(rows[i].children[x])
+			tablero[i][x] = "-"
+		}
+	}
+	winner = document.getElementById("winner")
+	winner.innerHTML = ""
+	var pDiv = document.getElementById("players")
+	pDiv.style.display = "block"
+}
+
+var startGame = function(){
+		var p1name = document.getElementById("p1").value
+		var p2name = document.getElementById("p2").value
+		player1 = new player(p1name, "X")
+		player2 = new player(p2name, "O")
+		var rnd = Math.floor(Math.random()*10)
+		if (rnd <= 5){
+			turn = player1
+		} else {
+			turn = player2
+		}
+		var t = document.getElementById("turn")
+		t.innerHTML = "Turno de: "+turn.name
+		var pDiv = document.getElementById("players")
+		pDiv.style.display = "none"
+		var gDiv = document.getElementById("gameScreen")
+		gDiv.style.display = "block"
+}
+
+var player1 = undefined
+var player2 = undefined
+var turn = undefined
+
+
+
+
